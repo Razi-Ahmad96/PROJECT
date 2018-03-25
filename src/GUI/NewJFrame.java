@@ -71,8 +71,6 @@ public class NewJFrame extends javax.swing.JFrame {
         setTitle("Geodetic Transformation");
         setAutoRequestFocus(false);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setLocationByPlatform(true);
-        setResizable(false);
 
         Input_Datum.setMaximumRowCount(15);
         Input_Datum.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "WGS84", "Everest IND-I -  Indian  Everest (India 1956) : India And Nepal", "Everest IND-B - Indian  Everest (India 1830) : Bangladesh", "NAD27  NAS-A - North American 1927 (Clarke 1866) : Eastern United States", "NAD27 NAS-B  - North American 1927 (Clarke 1866) : Western United States", "NAD27 NAS-C  - North American 1927 (Clarke 1866) :Mean Value(Conus)", "NAD27 NAS-D - North American 1927  (Clarke 1866) :Alaska", "NAD27 NAS-E - North American 1927  (Clarke 1866) :Canada", "NAD27 NAS-F - North American 1927  (Clarke 1866) :Alberta and British Columbia", "NAD27 NAS-G - North American 1927  (Clarke 1866) :East Canada", "NAD27 NAS-N - North American 1927  (Clarke 1866) :Central America", "NAD27 NAS-P - North American 1927  (Clarke 1866) :Caribbean", "NAD27 NAS-T - North American 1927  (Clarke 1866) :Cuba", "NAD27 NAS-L - North American 1927  (Clarke 1866) :Mexico", "NAD83 NAR-A -North American 1983 (GRS 80) :Alaska", "NAD83 NAR-B -North American 1983 (GRS 80) :Canada", "NAD83 NAR-C -North American 1983 (GRS 80) :Conus", "NAD83 NAR-D -North American 1983 (GRS 80) :Mexico And Central America", "NAD83 NAR-E -North American 1983 (GRS 80) :Aleutian Island", "NAD83 NAR-H -North American 1983 (GRS 80) :Hawaii", "AGD66 ZEE-K - Australian Geodetic Datum 1966 :Australia" }));
@@ -369,10 +367,20 @@ public class NewJFrame extends javax.swing.JFrame {
             {
                 Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
-           
-            LatitudeOutput.setText(Double.toString(datumOut[0]));
-            LongitudeOutput.setText(Double.toString(datumOut[1]));
+            
             HeightOutput.setText(Double.toString(datumOut[2]));
+            if(DD.isSelected()){
+                LatitudeOutput.setText(Double.toString(datumOut[0]));
+                LongitudeOutput.setText(Double.toString(datumOut[1]));
+            }else if(DMM.isSelected()){
+                LatitudeOutput.setText(Integer.toString((int) datumOut[0])+" "+(datumOut[0]-(int) datumOut[0])*60);
+                LongitudeOutput.setText(Integer.toString((int) datumOut[1])+" "+(datumOut[1]-(int) datumOut[1])*60);
+            }else if(DMSS.isSelected()){
+                double second1=(((datumOut[0]-(int) datumOut[0])*60)-(int)((datumOut[0]-(int) datumOut[0])*60))*60;
+                double second2=(((datumOut[1]-(int) datumOut[1])*60)-(int)((datumOut[1]-(int) datumOut[1])*60))*60;
+                LatitudeOutput.setText(Integer.toString((int) datumOut[0])+" "+(int)((datumOut[0]-(int) datumOut[0])*60)+" "+second1);
+                LongitudeOutput.setText(Integer.toString((int) datumOut[1])+" "+(int)((datumOut[1]-(int) datumOut[1])*60)+" "+second2);
+            }            
             
         }
     }//GEN-LAST:event_ConvertButtonActionPerformed
