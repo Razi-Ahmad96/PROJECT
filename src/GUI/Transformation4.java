@@ -153,6 +153,8 @@ class Transformation4
     {
         double ret[]=new double[3];
         
+        int flag =0; // flag to check boundary condition
+        
         System.out.println("Id1="+id1+" Id2="+id2);
         
         double major1=0, minor1=0, flat1=0, major2=0, minor2=0, flat2=0, majorw=0, minorw=0, flatw=0;
